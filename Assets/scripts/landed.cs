@@ -14,11 +14,12 @@ public class landed : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
    
-        Debug.Log("hit");
-        if (other.gameObject.tag!="Player")
+        Debug.Log(other.tag);
+        
+        if (other.gameObject.tag!= "Player")
         {
             hp.landed = true;
-            Debug.Log("landed");
+            Debug.Log("Untagged");
         }
 
     }
@@ -28,7 +29,7 @@ public class landed : MonoBehaviour
         if (other.gameObject.tag != "Player")
         {
             hp.landed = false;
-            Debug.Log("takeoff");
+            Debug.Log("Untagged");
         }
     }
 }
