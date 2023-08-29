@@ -8,6 +8,7 @@ TagManager:
   - wall2
   - wall3
   - wall4
+  - smoke
   layers:
   - Default
   - TransparentFX

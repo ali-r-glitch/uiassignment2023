@@ -14,6 +14,8 @@ public class building : MonoBehaviour
     private GameObject cllisioonabove;
     private abovethebuilding abv;
     private helikoter hk;
+    private GameObject cam,smoke;
+    
     
          
 
@@ -21,6 +23,8 @@ public class building : MonoBehaviour
 
     private void Start()
     {
+
+        cam = GameObject.Find("Main Camera");
         canvas = (transform.FindChild("Canvas")).gameObject;
         player = GameObject.Find("player");
         cllisioonabove = transform.Find("above").gameObject;
@@ -48,6 +52,11 @@ public class building : MonoBehaviour
                 wall4 = child.gameObject;
 
             }
+            if (child.CompareTag("smoke"))
+            {
+                smoke = child.gameObject;
+
+            }
         }
         
     }
@@ -60,6 +69,7 @@ public class building : MonoBehaviour
         canvas.SetActive(true);
         current = maxhealth;
         burningbuilding();
+        smoke.SetActive(true);
 
     }
 
@@ -84,13 +94,15 @@ public class building : MonoBehaviour
         if(hk.water>0)
         {
             hk.water--;
-            wall1.transform.localScale += new Vector3(0, 0.05f, 0);
-            wall2.transform.localScale += new Vector3(0, 0.05f, 0);
-            wall3.transform.localScale += new Vector3(0, 0.05f, 0);
-            wall4.transform.localScale += new Vector3(0, 0.05f, 0);
-            if (wall1.transform.localScale.y > 1f)
+            wall1.transform.localScale -= new Vector3(0, 0.05f, 0);
+            wall2.transform.localScale -= new Vector3(0, 0.05f, 0);
+            wall3.transform.localScale -= new Vector3(0, 0.05f, 0);
+            wall4.transform.localScale -= new Vector3(0, 0.05f, 0);
+            if (wall1.transform.localScale.y <=0f)
             {
-                this.gameObject.SetActive(false);
+               isonfire= !isonfire;
+                smoke.SetActive(false);
+
             }
 
         }
@@ -144,7 +156,7 @@ public class building : MonoBehaviour
 
             }
         }
-        canvas.transform.LookAt(player.transform);
+        canvas.transform.LookAt(cam.transform);
 
 
 
