@@ -34,10 +34,10 @@ public class building : MonoBehaviour
         canvas = (transform.FindChild("Canvas")).gameObject;
         player = GameObject.Find("player");
         playerwaterparticles = GameObject.Find("waterfallholder");
-        playerwaterparticles.SetActive(false);
-        Debug.Log(playerwaterparticles.name);
+     
+        //Debug.Log(playerwaterparticles.name);
 
-        cllisioonabove = transform.Find("above").gameObject;
+        cllisioonabove = transform.FindChild("above").gameObject;
         hk = player.GetComponent<helikoter>();
         abv = cllisioonabove.GetComponent<abovethebuilding>();
         foreach (Transform child in transform)
@@ -69,6 +69,7 @@ public class building : MonoBehaviour
             }
         }
         
+
     }
 
     void ignitebuilding()
@@ -119,7 +120,8 @@ public class building : MonoBehaviour
                 wall3.transform.localScale = new Vector3(1, 0, 1);
                 wall4.transform.localScale = new Vector3(1, 0, 1);
                 canvas.SetActive(false);
-               
+                playerwaterparticles.SetActive(false);
+
 
             }
 
@@ -129,9 +131,9 @@ public class building : MonoBehaviour
     private void FixedUpdate()
     {
         fireputout += Time.deltaTime;
-        if (fireputout > 0.2f)
+        if (fireputout > 0.5f)
         {
-            fireputout -= 0.2f;
+            fireputout -= 0.5f;
 
             //waterassossiatedcode
             if (abv.isontop)

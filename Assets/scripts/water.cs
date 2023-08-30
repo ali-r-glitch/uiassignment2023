@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class water : MonoBehaviour
 {
-    private AudioSource wat;
+    public AudioSource wat;
     public AudioClip sound;
     private void Start()
     {
