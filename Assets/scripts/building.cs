@@ -15,6 +15,11 @@ public class building : MonoBehaviour
     private abovethebuilding abv;
     private helikoter hk;
     private GameObject cam,smoke;
+    private AudioSource aud;
+    private float fireputout;
+    private GameObject playerwaterparticles;
+    
+
     
     
          
@@ -23,10 +28,15 @@ public class building : MonoBehaviour
 
     private void Start()
     {
-
+       
+        aud = GetComponent<AudioSource>();
         cam = GameObject.Find("Main Camera");
         canvas = (transform.FindChild("Canvas")).gameObject;
         player = GameObject.Find("player");
+        playerwaterparticles = GameObject.Find("waterfallholder");
+        playerwaterparticles.SetActive(false);
+        Debug.Log(playerwaterparticles.name);
+
         cllisioonabove = transform.Find("above").gameObject;
         hk = player.GetComponent<helikoter>();
         abv = cllisioonabove.GetComponent<abovethebuilding>();
@@ -70,6 +80,7 @@ public class building : MonoBehaviour
         current = maxhealth;
         burningbuilding();
         smoke.SetActive(true);
+        aud.Play();
 
     }
 
@@ -93,6 +104,7 @@ public class building : MonoBehaviour
     {
         if(hk.water>0)
         {
+            playerwaterparticles.SetActive(true);
             hk.water--;
             wall1.transform.localScale -= new Vector3(0, 0.05f, 0);
             wall2.transform.localScale -= new Vector3(0, 0.05f, 0);
@@ -102,6 +114,12 @@ public class building : MonoBehaviour
             {
                isonfire= !isonfire;
                 smoke.SetActive(false);
+                wall1.transform.localScale = new Vector3(1, 0, 1);
+                wall2.transform.localScale = new Vector3(1, 0, 1);
+                wall3.transform.localScale = new Vector3(1, 0, 1);
+                wall4.transform.localScale = new Vector3(1, 0, 1);
+                canvas.SetActive(false);
+               
 
             }
 
@@ -110,16 +128,20 @@ public class building : MonoBehaviour
    
     private void FixedUpdate()
     {
-        //waterassossiatedcode
-        if (abv.isontop)
+        fireputout += Time.deltaTime;
+        if (fireputout > 0.2f)
         {
-            if (isonfire)
+            fireputout -= 0.2f;
+
+            //waterassossiatedcode
+            if (abv.isontop)
             {
-                puttingoutfir();
+                if (isonfire)
+                {
+                    puttingoutfir();
+                }
             }
         }
-
-
 
 
 
@@ -152,6 +174,8 @@ public class building : MonoBehaviour
             }else
             {
                 burningbuilding();
+               
+              
               
 
             }

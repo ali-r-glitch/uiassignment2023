@@ -8,14 +8,23 @@ public class helikoter : MonoBehaviour
     public float rotationspeed;
     [SerializeField] private Transform blades;
     public bool landed;
-    public float throttle,water;
+    public float throttle,water=100f;
     private float rotorspeed=10f, throttleant = 25f;
     private float bufferdip = 0;
+    private bool playsound=false;
+    private AudioSource enginesiund;
+    public AudioClip helicoptersound;
 
     // Start is called before the first frame update
 
 
     // Update is called once per frame
+    private void Start()
+    {
+        enginesiund = GetComponent<AudioSource>();
+        enginesiund.clip = helicoptersound;
+
+    }
     void Update()
     {
         throttle = Mathf.Clamp(throttle, 0, 100);
@@ -30,8 +39,23 @@ public class helikoter : MonoBehaviour
             transform.position += Vector3.up * Time.deltaTime * -3;
            throttle -= (Time.deltaTime * throttleant)/4;
         }
+        if(landed)
+        {
+           
+            enginesiund.Stop();
+            playsound = false;
+            
+        }
         if (!landed)
         {
+            if (!playsound)
+            {
+                enginesiund.Play();
+                playsound = true;
+            }
+
+           
+
             if (Input.GetKey(KeyCode.A))
             {
                 transform.Rotate(0, -rotationspeed, 0);
