@@ -9,7 +9,7 @@ public class building : MonoBehaviour
     public bool isonfire;
 
     private float maxhealth,current,maybefire = 0;
-    public int randomnum,randomnum2,probabl=20;
+    public int randomnum,randomnum2,probabl;
     private GameObject canvas,player,wall1, wall2, wall3, wall4;
     private GameObject cllisioonabove;
     private abovethebuilding abv;
@@ -18,6 +18,7 @@ public class building : MonoBehaviour
     private AudioSource aud;
     private float fireputout;
     private GameObject playerwaterparticles;
+    private int intfirbuil;
     
 
     
@@ -28,6 +29,7 @@ public class building : MonoBehaviour
 
     private void Start()
     {
+        probabl = 20;
        
         aud = GetComponent<AudioSource>();
         cam = GameObject.Find("Main Camera");
@@ -82,6 +84,7 @@ public class building : MonoBehaviour
         burningbuilding();
         smoke.SetActive(true);
         aud.Play();
+        hk.buildingsonfire++;
 
     }
 
@@ -98,6 +101,8 @@ public class building : MonoBehaviour
         if (wall1.transform.localScale.y>1f)
         {
             this.gameObject.SetActive(false);
+            hk.buildingsonfire--;
+            hk.buildingsburntdown++;
         }
     }
 
@@ -121,6 +126,7 @@ public class building : MonoBehaviour
                 wall4.transform.localScale = new Vector3(1, 0, 1);
                 canvas.SetActive(false);
                 playerwaterparticles.SetActive(false);
+                hk.buildingsonfire--;
 
 
             }
@@ -130,6 +136,7 @@ public class building : MonoBehaviour
    
     private void FixedUpdate()
     {
+        probabl = hk.probablility;
         fireputout += Time.deltaTime;
         if (fireputout > 0.25f)
         {
@@ -167,10 +174,15 @@ public class building : MonoBehaviour
                 randomnum2 = Random.Range(1, probabl);
                 if (!abv.isontop)
                 {
-                    if (randomnum2 == randomnum)
+                    if (hk.maxbuildingsonfire>hk.buildingsonfire)
                     {
-                        isonfire = true;
-                        ignitebuilding();
+
+
+                        if (randomnum2 == randomnum)
+                        {
+                            isonfire = true;
+                            ignitebuilding();
+                        }
                     }
                 }
             }else

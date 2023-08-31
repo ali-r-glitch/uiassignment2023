@@ -14,8 +14,13 @@ public class helikoter : MonoBehaviour
     private bool playsound=false;
     private AudioSource enginesiund;
     public AudioClip helicoptersound;
-    public GameObject partwater;
+    public GameObject partwater,panlelose;
     public Slider slid;
+    public int buildingsonfire,maxbuildingsonfire=3;
+    public int buildingsburntdown,probablility=20;
+    public GameObject burntdown1, burntdown2, burntdown3;
+
+
     // Start is called before the first frame update
 
 
@@ -29,6 +34,25 @@ public class helikoter : MonoBehaviour
   
     void Update()
     {
+
+        switch (buildingsburntdown)
+        {
+            case 1:
+                burntdown1.SetActive(true);
+                break;
+            case 2:
+                burntdown2.SetActive(true);
+                break;
+            case 3:
+                burntdown3.SetActive(true);
+                break;
+        }
+
+        if(buildingsburntdown>=4)
+        {
+            panlelose.SetActive(true);
+        }
+
         slid.value = water;
         throttle = Mathf.Clamp(throttle, 0, 100);
         blades.Rotate(Vector3.up * throttle * rotorspeed);
