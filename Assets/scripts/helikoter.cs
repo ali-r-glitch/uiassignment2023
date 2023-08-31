@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class helikoter : MonoBehaviour
 {
 
@@ -15,7 +15,7 @@ public class helikoter : MonoBehaviour
     private AudioSource enginesiund;
     public AudioClip helicoptersound;
     public GameObject partwater;
-
+    public Slider slid;
     // Start is called before the first frame update
 
 
@@ -29,6 +29,7 @@ public class helikoter : MonoBehaviour
   
     void Update()
     {
+        slid.value = water;
         throttle = Mathf.Clamp(throttle, 0, 100);
         blades.Rotate(Vector3.up * throttle * rotorspeed);
         //backblades.Rotate(new Vector3(1 * throttle * rotorspeed, 0,0) );
@@ -64,14 +65,14 @@ public class helikoter : MonoBehaviour
             if (Input.GetKey(KeyCode.A))
             {
                 transform.Rotate(0, -rotationspeed, 0);
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0), 1f);
+               // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0), 1f);
 
 
             }
             if (Input.GetKey(KeyCode.D))
             {
                 transform.Rotate(0, rotationspeed, 0);
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, transform.localRotation.eulerAngles.y, 0), 1f);
+               // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, transform.localRotation.eulerAngles.y, 0), 1f);
 
             }
             if (Input.GetKey(KeyCode.W))

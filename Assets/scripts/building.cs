@@ -131,9 +131,9 @@ public class building : MonoBehaviour
     private void FixedUpdate()
     {
         fireputout += Time.deltaTime;
-        if (fireputout > 0.5f)
+        if (fireputout > 0.25f)
         {
-            fireputout -= 0.5f;
+            fireputout -= 0.25f;
 
             //waterassossiatedcode
             if (abv.isontop)

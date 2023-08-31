@@ -8,6 +8,14 @@ public class menuhandler : MonoBehaviour
 {
     public GameObject startpanel,howtioau,deathscreen,winscreen,pausemenu;
     // Start is called before the first frame update
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+             Pausemenu();
+
+        }
+    }
     private void Start()
     {
         Time.timeScale = 0;
@@ -27,12 +35,8 @@ public class menuhandler : MonoBehaviour
 
     public void Pausemenu()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Time.timeScale = 0;
-            pausemenu.SetActive(true);
-
-        }
+        Time.timeScale = 0;
+        pausemenu.SetActive(true);
     }
 
     public void exit()
